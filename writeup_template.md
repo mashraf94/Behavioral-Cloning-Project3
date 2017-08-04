@@ -65,6 +65,7 @@ The model includes ELU layers to introduce nonlinearity (code line 20), and the 
 3) L2 regularization
 4) Data Augmentation (brightness/flip/left-right-cameras)
 5) Early Stopping of Training
+6) Preprocessing (resizing the data and decreasing number of features)
 
 The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
 
@@ -93,9 +94,24 @@ My first step was to use a convolution neural network model similar to the NVIDI
 
 ![alt_text][NVIDIA_arch]
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set with 1:4 ratio. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
-To combat the overfitting, I modified the model so that ...
+Overfitting was one of the main issues throughout this project:
+    To combat the overfitting, I experimented with several techniques:
+1. Reducing the density of the data from Track 1, through using data from the second track, to avoid overfitting on the first track and avoiding the model to only memorize driving around the first track.
+2. Regularizing the data, by plotting its histogram and reducing the amount of data overshooting the average by a range of experimented factors (1 --> 3), and choosing a factor of 2.5 as an optimum. Although, the highest concentration of data was at the 0 steering angle, however, I think that the distribution resembled in this histogram, is a clean bell shape curve, representation of the steering angles propabilities.
+3. Augmenting the Data: 
+    1. Through flipping each image and applying a negative sign to its angle.
+    2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
+    3. Introducing a random brightness and dimming to each image to account for shadows and bright sections of each track.
+    4. Introducing L2 Regularization to each layer's weights
+4. Batch normalization for each layer, to reduce the covariate shift of the outputs of each layer.
+5. Used Early Stopping for the training epochs, so that as soon as the Validation Loss stops decreasing the training is terminated.
+6. Preprocessing each input image to the model (including test images):
+1. Cropping to avoid learning any features other than the track itself
+2. Resizing to reduce the number of features input to the model and hence reducing the model complexity.
+        
+            
 
 Then I ... 
 
