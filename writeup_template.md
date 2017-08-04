@@ -18,7 +18,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
+[NVIDIA_arch]: ./writeup_images/NVIDIA_ConvNet.png "NVIDIA Model Visualization"
 [image2]: ./examples/placeholder.png "Grayscaling"
 [image3]: ./examples/placeholder_small.png "Recovery Image"
 [image4]: ./examples/placeholder_small.png "Recovery Image"
@@ -54,11 +54,17 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+My model is a modified replica of the NVIDIA architecture for end-to-end autonomous driving with 5 Convolutional Layers at first, followed by 3 Fully Connected Layers that produces the output layer as the steering angle prediction. (model.py lines #-#)
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+The model includes ELU layers to introduce nonlinearity (code line 20), and the model's inputs are pre-processed by 2 Keras lambda layers for normalization and resizing. (code line 18). 
 
 ####2. Attempts to reduce overfitting in the model
+
+1) Data Sets Collected - Including Track2
+2) Normalizing the data set (histograms)
+3) L2 regularization
+4) Data Augmentation (brightness/flip/left-right-cameras)
+5) Early Stopping of Training
 
 The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
 
@@ -70,6 +76,9 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 ####4. Appropriate training data
 
+Training data:
+    A vast amount of training data were collected, including the data provided by Udacity. Plus, from Track1 a combination of center lane driving, reverse driving the whole track, recovery data including emphasis on the less common spots on the track, were collected. Moreover, for regularizing the data set a similar set of Track2 was also included.
+    
 Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
 
 For details about how I created the training data, see the next section. 
@@ -80,7 +89,9 @@ For details about how I created the training data, see the next section.
 
 The overall strategy for deriving a model architecture was to ...
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a convolution neural network model similar to the NVIDIA's architecture which is relatively small and showed an extremely high performance. At the start of my project, other architectures were experimented also, for example: the convolutional network with Inception modules of GoogLeNet Architecture was imported for feature extraction and 3 Dense layers were added on top, but was very slow and gave similar results to the NVIDIA architecture. Hence, the NVIDIA architecture was chosen and further enhanced, since it wasn't as complicated as GoogLeNet or VGG, and it was way easier to train and avoid overfitting using such a simple architecture; Resembled in the figure below.
+
+![alt text][NVIDIA_arch]
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
