@@ -91,7 +91,7 @@ The overall strategy for deriving a model architecture was to ...
 
 My first step was to use a convolution neural network model similar to the NVIDIA's architecture which is relatively small and showed an extremely high performance. At the start of my project, other architectures were experimented also, for example: the convolutional network with Inception modules of GoogLeNet Architecture was imported for feature extraction and 3 Dense layers were added on top, but was very slow and gave similar results to the NVIDIA architecture. Hence, the NVIDIA architecture was chosen and further enhanced, since it wasn't as complicated as GoogLeNet or VGG, and it was way easier to train and avoid overfitting using such a simple architecture; Resembled in the figure below.
 
-![alt text][NVIDIA_arch]
+![alt_text][NVIDIA_arch]
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
