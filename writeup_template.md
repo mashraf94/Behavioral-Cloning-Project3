@@ -19,12 +19,11 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [NVIDIA_arch]: ./writeup_images/NVIDIA_ConvNet.png "NVIDIA Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[model_graph]: ./writeup_images/model_final.png "Model Architecture"
+[blur_img]: ./writeup_images/img.png "Blurred Image"
+[import_data]: ./writeup_images/import_data_dist.png "Imported Data Histogram"
+[filter_data]: ./writeup_images/filter_data_dist.png "Filtered Data Histogram"
+[final_data]: ./writeup_images/normalized_data_dist.png "Augmented Filtered Data Histogram"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
