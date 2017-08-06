@@ -77,7 +77,7 @@ For details about how I created the training data, see the next section.
 
 ## **Model Architecture and Training Strategy**
 
-#### 1. Solution Design Approach
+#### Solution Design Approach
 
 My first step was to use a convolution neural network model similar to the NVIDIA's architecture which is relatively small and showed an extremely high performance. At the start of my project, other architectures were experimented also, for example: the convolutional network with Inception modules of GoogLeNet Architecture was imported for feature extraction and 3 Dense layers were added on top, but was very slow and gave similar results to the NVIDIA architecture. Hence, the NVIDIA architecture was chosen and further enhanced, since it wasn't as complicated as GoogLeNet or VGG, and it was way easier to train and prevented overfitting using such a simple architecture; Resembled in the figure below.
 
@@ -113,6 +113,8 @@ To combat overfitting, I proceeded with several techniques:
 1. Through flipping each image and applying a negative sign to its angle.
     * Center Image with Steering Angle: 
     <p align="center"><img src="./writeup_images/normal_angle.png"/></p>
+    * Flipped Center Image with Steering Angle: 
+    <p align="center"><img src="./writeup_images/reverse_angle.png"/></p>
 2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
     * Image Representing Right Camera - Red Line is imported Steering Angle and Blue Line shows the correction 0.2:
     <p align="center"><img src="./writeup_images/right_correct.png"></p>
@@ -151,14 +153,24 @@ After augmenting and preprocessing the data, I modified the NVIDIA architecture 
 * ELU introduces non-linearity to the model which solves the vanishing gradient problem
 * ELU is better than RELU since it has a mean closer to zero than the RELU which accelerates the training.
 * Introducing ELU to the model significantly enhanced its performance and helped the model to converge towards a lower minima.
-    
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
 
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
+Moreover, Dropout was tested for regularization, to introduces noise into the model to learn to generalize it and prevent overfitting. Nonetheless with the presence of Batch Normalization, which is a technique mostly to improve optimization and reducing every layer's covariate shift. Batch normalization introduced noise into the model and regularized it enough. Therefore, dropout only slowed down the model training and actually caused the model to underfit.
 
-####2. Final Model Architecture
+The final step was to train the model, which trained for 6 epochs and recorded the 5th epoch outcome which had the minimal mean squared loss. 
 
-The final model architecture (model.py lines 195-271) consisted of a convolution neural network with the following layers and layer sizes ...
+Then, the simulator was run autonomously to visualize the model's performance on mainly track 1 and track 2 also for further testing and proof that the model didn't only memorize how to drive around the track 1. 
+
+At the end of the process, the vehicle was able to drive autonomously cleanly around both tracks without leaving the road.
+
+## **Final Model Architecture**
+
+The final model architecture (model.py lines 195-271) consisted of a convolution neural network with the following layers and layer sizes: 
+| # | Layer | Details |
+|:---:|:----------:|:---------:|
+| 1 | Cropping | Crops image to 76x320 |
+| 2 | Resize | Resizes image to 66x200 |
+| 3 | Normalization | Normalized pixel values from -1 to 1 |
+| 4 | Convolutional 1 | 5x5 Filter, Same Padding, Stride 1 |
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
