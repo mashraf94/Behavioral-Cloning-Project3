@@ -1,11 +1,5 @@
 #**Behavioral Cloning** 
 
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
 **Behavioral Cloning Project**
 
 The goals / steps of this project are the following:
@@ -20,66 +14,64 @@ The goals / steps of this project are the following:
 
 [NVIDIA_arch]: ./writeup_images/NVIDIA_ConvNet.png "NVIDIA Model Visualization"
 [model_graph]: ./writeup_images/model_final.png "Model Architecture"
+[model_loss]: ./writeup_images/model_loss.png "Model Losses"
 [blur_img]: ./writeup_images/img.png "Blurred Image"
 [import_data]: ./writeup_images/import_data_dist.png "Imported Data Histogram"
 [filter_data]: ./writeup_images/filter_data_dist.png "Filtered Data Histogram"
 [final_data]: ./writeup_images/normalized_data_dist.png "Augmented Filtered Data Histogram"
-
-## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
-
----
-###Files Submitted & Code Quality
-
-####1. Submission includes all required files and can be used to run the simulator in autonomous mode
+[center_track1]: ./writeup_images/center_track1.jpg "Center Track 1"
+[center_track2]: ./writeup_images/center_track2.jpg "Center Track 2"
+[recovery1]: ./writeup_images/recovery1.jpg "Recovery 1"
+[recovery2]: ./writeup_images/recovery2.jpg "Recovery 2"
+[recovery3]: ./writeup_images/recovery3.jpg "Recovery 3"
+[recovery4]: ./writeup_images/recovery4.jpg "Recovery 4"
+[recovery5]: ./writeup_images/recovery5.jpg "Recovery 5"
+[recovery6]: ./writeup_images/recovery6.jpg "Recovery 6"
+[img_crop]: ./writeup_images/img_crop.png "Cropped"
 
 My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
-* model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
+* model.h5 containing a trained convolution neural network
+* Track1.mp4 recorded video of the car autonomously driving succesfully through Track 1
+* Track2.mp4 recorded video of the car autonomously driving succesfully through Track 2
 
-####2. Submission includes functional code
+
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
 ```sh
 python drive.py model.h5
 ```
 
-####3. Submission code is usable and readable
-
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
-###Model Architecture and Training Strategy
+####1. Model Architecture and Training Strategy
 
-####1. An appropriate model architecture has been employed
+My model is a modified replica of the NVIDIA architecture for end-to-end autonomous driving with 5 Convolutional Layers at first, followed by 3 Fully Connected Layers that produces the output layer as the steering angle prediction. (model.py lines 195-271)
 
-My model is a modified replica of the NVIDIA architecture for end-to-end autonomous driving with 5 Convolutional Layers at first, followed by 3 Fully Connected Layers that produces the output layer as the steering angle prediction. (model.py lines #-#)
-
-The model includes ELU layers to introduce nonlinearity (code line 20), and the model's inputs are pre-processed by 2 Keras lambda layers for normalization and resizing. (code line 18). 
+The model includes ELU layers to introduce nonlinearity, and the model's inputs are pre-processed by a Cropping2D layer to crop the images, followed by 2 Keras lambda layers for normalization and resizing. (code line 199-205). 
 
 ####2. Attempts to reduce overfitting in the model
 
 1) Data Sets Collected - Including Track2
-2) Normalizing the data set (histograms)
-3) L2 regularization
-4) Data Augmentation (brightness/flip/left-right-cameras)
-5) Early Stopping of Training
-6) Preprocessing (resizing the data and decreasing number of features)
+2) Normalizing the data set's probability density (histograms)
+3) Batch Normalization
+4) L2 regularization
+5) Data Augmentation (brightness/flip/left-right-cameras)
+6) Early Stopping of Training
+7) Preprocessing (resizing the data and decreasing number of features)
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model was tested with dropout layers but weren't necessary thanks to batch normalization layers.
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained on 80% of the data and validated on the remaining 20% to ensure that the model was not overfitting and to understand the model's performance. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the center of both tracks.
 
 ####3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, however the learning rate was attempted to be tuned several times, yet the Adam optimizer default learning rate 0.001 performed the most efficiently. (model.py line 264).
 
 ####4. Appropriate training data
 
 Training data:
-    A vast amount of training data were collected, including the data provided by Udacity. Plus, from Track1 a combination of center lane driving, reverse driving the whole track, recovery data including emphasis on the less common spots on the track, were collected. Moreover, for regularizing the data set a similar set of Track2 was also included.
-    
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+    A vast amount of training data were collected, including the data provided by Udacity. Plus, a collection from Track1 including: a combination of center lane driving, and recovery data with emphasis on the less common spots of the track. Moreover, for regularizing a similar set of Track2 was also included.
 
 For details about how I created the training data, see the next section. 
 
@@ -87,18 +79,30 @@ For details about how I created the training data, see the next section.
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
-
-My first step was to use a convolution neural network model similar to the NVIDIA's architecture which is relatively small and showed an extremely high performance. At the start of my project, other architectures were experimented also, for example: the convolutional network with Inception modules of GoogLeNet Architecture was imported for feature extraction and 3 Dense layers were added on top, but was very slow and gave similar results to the NVIDIA architecture. Hence, the NVIDIA architecture was chosen and further enhanced, since it wasn't as complicated as GoogLeNet or VGG, and it was way easier to train and avoid overfitting using such a simple architecture; Resembled in the figure below.
+My first step was to use a convolution neural network model similar to the NVIDIA's architecture which is relatively small and showed an extremely high performance. At the start of my project, other architectures were experimented also, for example: the convolutional network with Inception modules of GoogLeNet Architecture was imported for feature extraction and 3 Dense layers were added on top, but was very slow and gave similar results to the NVIDIA architecture. Hence, the NVIDIA architecture was chosen and further enhanced, since it wasn't as complicated as GoogLeNet or VGG, and it was way easier to train and prevented overfitting using such a simple architecture; Resembled in the figure below.
 
 ![alt_text][NVIDIA_arch]
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set with 1:4 ratio. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set with 4:1 ratio. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
 Overfitting was one of the main issues throughout this project:
     To combat the overfitting, I experimented with several techniques:
 1. Reducing the density of the data from Track 1, through using data from the second track, to avoid overfitting on the first track and avoiding the model to only memorize driving around the first track.
-2. Regularizing the data, by plotting its histogram and reducing the amount of data overshooting the average by a range of experimented factors (1 --> 3), and choosing a factor of 2.5 as an optimum. Although, the highest concentration of data was at the 0 steering angle, however, I think that the distribution resembled in this histogram, is a clean bell shape curve, representation of the steering angles propabilities.
+2. Regularizing the data's probability density:
+    1. Plotted the raw data's histogram:
+    
+    ![alt_text][import_data]
+    
+    2. Reduced the amount of data overshooting the scaled average by a range of experimented factors (1 --> 3), and choosing a factor of 1.5 as an optimum; Scaled Average = 1560 image/bin
+    
+    ![alt_text][filter_data]
+    
+    3. Included images captured by the left and right cameras and adjusted the steering angle by a correction factor of 0.2. Plus, I flipped the each of the three images and applied a negative sign to the steering angles.
+    
+    ![alt_text][final_data]
+    
+    * Although, the highest concentration of data was at the 0 steering angle, however, I think that the distribution resembled in this histogram, is a clean bell shape curve, representation of the steering angles propabilities with zero mean and standard deviation 0.4.
+    
 3. Augmenting the Data: 
     1. Through flipping each image and applying a negative sign to its angle.
     2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
