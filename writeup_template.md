@@ -132,7 +132,7 @@ Overfitting was one of the main issues throughout this project:
     
     2. Resizing to reduce the number of features input to the model and hence reducing the model complexity.
     
-    <p align="center"><img src="./writeup_images/img_resize.png"/></p>
+    <p align="left"><img src="./writeup_images/img_resize.png"/></p> <p align="right"><img src="./writeup_images/img_resized.png"/></p>
             
 
 Then I ... 
