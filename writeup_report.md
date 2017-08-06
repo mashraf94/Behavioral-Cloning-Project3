@@ -221,7 +221,7 @@ I finally randomly shuffled the data set and put 20% of the data into a validati
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. 
 
-*I fed the model this huge amount of data using a python generator that read, augmented the images, shuffled the data, and created the labels of the dataset and generated them in batches for the `model.fit_generator` function.* (model.py lines 128-187)
+*I fed the model this huge amount of data using a python generator that read, augmented the images, shuffled the data, and created the labels of the dataset and generated them in batches for training using the* `model.fit_generator` *function.* (model.py lines 128-187)
 
 The ideal number of epochs was 5 as evidenced by the Early Stopping method (mentioned earlier). 
 
