@@ -87,38 +87,38 @@ In order to gauge how well the model was working, I split my image and steering 
 
 ## **Overfitting**
 Overfitting was one of the main issues throughout this project:
-    To combat overfitting, I proceeded with several techniques:
-    
+To combat overfitting, I proceeded with several techniques:
+
 #### 1. Reducing the density of the data from Track 1, through using data from the second track, to avoid overfitting on the first track and avoiding the model to only memorize driving around the first track.
 
 #### 2. Regularizing the data's probability density:
 1. Plotted the raw data's histogram:
 
-    <p align="center" height=100 width=100><img src="./writeup_images/import_data_dist.png"/></p>
-    
-    2. Reduced the amount of data overshooting the scaled average by a range of experimented factors (1 --> 3), and choosing a factor of 1.5 as an optimum; Scaled Average = 1560 image/bin
-    
-    <p align="center"><img src="./writeup_images/filter_data_dist.png"/></p>
-    
-    3. Included images captured by the left and right cameras and adjusted the steering angle by a correction factor of 0.2. Plus, I flipped the each of the three images and applied a negative sign to the steering angles.
-    
-    <p align="center"><img src="./writeup_images/normalized_data_dist.png"/></p>
-    
-    * Although, the highest concentration of data was at the 0 steering angle, however, I think that the distribution resembled in this histogram, is a clean bell shape curve, representation of the steering angles propabilities with zero mean and standard deviation 0.4.
-    * This normal distribution of data, had a significant impact on the model's performance; cleaned up the noise shown in the car driving unsteadily through the tracks.
+<p align="center" height=100 width=100><img src="./writeup_images/import_data_dist.png"/></p>
+
+2. Reduced the amount of data overshooting the scaled average by a range of experimented factors (1 --> 3), and choosing a factor of 1.5 as an optimum; Scaled Average = 1560 image/bin
+
+<p align="center"><img src="./writeup_images/filter_data_dist.png"/></p>
+
+3. Included images captured by the left and right cameras and adjusted the steering angle by a correction factor of 0.2. Plus, I flipped the each of the three images and applied a negative sign to the steering angles.
+
+<p align="center"><img src="./writeup_images/normalized_data_dist.png"/></p>
+
+* Although, the highest concentration of data was at the 0 steering angle, however, I think that the distribution resembled in this histogram, is a clean bell shape curve, representation of the steering angles propabilities with zero mean and standard deviation 0.4.
+* This normal distribution of data, had a significant impact on the model's performance; cleaned up the noise shown in the car driving unsteadily through the tracks.
     
 #### 3. Augmenting the Data: 
 1. Through flipping each image and applying a negative sign to its angle.
-        * Center Image with Steering Angle: 
-        <p align="center"><img src="./writeup_images/normal_angle.png"/></p>
-    2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
-        * Image Representing Right Camera - Red Line is imported Steering Angle and Blue Line shows the correction 0.2:
-        <p align="center"><img src="./writeup_images/right_correct.png"></p>
-    3. Introducing a random brightness and dimming to each image to account for shadows and bright sections of each track.
-        * Image with random brightness of -30 which dimms the image as shown:
-        2<p align="center"><img src="./writeup_images/img_dim.png"></p>
-    4. Blurring each image with 3x3 kernel to reduce the impact of any textures on the training.
-        <p align="center"><img src="./writeup_images/img.png"/></p>
+    * Center Image with Steering Angle: 
+    <p align="center"><img src="./writeup_images/normal_angle.png"/></p>
+2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
+    * Image Representing Right Camera - Red Line is imported Steering Angle and Blue Line shows the correction 0.2:
+    <p align="center"><img src="./writeup_images/right_correct.png"></p>
+3. Introducing a random brightness and dimming to each image to account for shadows and bright sections of each track.
+    * Image with random brightness of -30 which dimms the image as shown:
+    2<p align="center"><img src="./writeup_images/img_dim.png"></p>
+4. Blurring each image with 3x3 kernel to reduce the impact of any textures on the training.
+    <p align="center"><img src="./writeup_images/img.png"/></p>
 
 #### 4. Batch normalization for each layer, to reduce the covariate shift of the outputs of each layer.
 
@@ -132,17 +132,17 @@ Overfitting was one of the main issues throughout this project:
 
 ### 7. Preprocessing each input image to the model (including test images):
 1. Cropping to avoid learning any features other than the track itself.
-    
-    <p align="center"><img src="./writeup_images/img_crop.png"/></p>
-    
-    2. Resizing to reduce the number of features input to the model and hence reducing the model complexity.
-    
-        * Cropped Image:
-        <p align="right"><img src="./writeup_images/img_resize.png"></p>
-        
-        * Resized Cropped Image:
-        <p align="right"><img src="./writeup_images/img_resized.png"></p>
-    
+
+<p align="center"><img src="./writeup_images/img_crop.png"/></p>
+
+2. Resizing to reduce the number of features input to the model and hence reducing the model complexity.
+
+    * Cropped Image:
+    <p align="right"><img src="./writeup_images/img_resize.png"></p>
+
+    * Resized Cropped Image:
+    <p align="right"><img src="./writeup_images/img_resized.png"></p>
+
 
 
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
