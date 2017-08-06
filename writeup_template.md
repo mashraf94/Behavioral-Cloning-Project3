@@ -110,18 +110,15 @@ Overfitting was one of the main issues throughout this project:
 3. Augmenting the Data: 
     1. Through flipping each image and applying a negative sign to its angle.
         * Center Image with Steering Angle: 
-        <p align="right"><img src="./writeup_images/normal_angle.png"/></p>
-    
+        <p align="center"><img src="./writeup_images/normal_angle.png"/></p>
     2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
         * Image Representing Right Camera - Red Line is imported Steering Angle and Blue Line shows the correction 0.2:
-        <p align="right"><img src="./writeup_images/right_correct.png"></p>
-        
+        <p align="center"><img src="./writeup_images/right_correct.png"></p>
     3. Introducing a random brightness and dimming to each image to account for shadows and bright sections of each track.
         * Image with random brightness of -30 which dimms the image as shown:
-        <p align="right"><img src="./writeup_images/img_dim.png"></p>
+        <p align="center"><img src="./writeup_images/img_dim.png"></p>
     4. Blurring each image with 3x3 kernel to reduce the impact of any textures on the training.
-    
-    <p align="center"><img src="./writeup_images/img.png"/></p>
+        <p align="center"><img src="./writeup_images/img.png"/></p>
 
 4. Batch normalization for each layer, to reduce the covariate shift of the outputs of each layer.
 
