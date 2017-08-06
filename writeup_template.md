@@ -81,7 +81,9 @@ For details about how I created the training data, see the next section.
 
 My first step was to use a convolution neural network model similar to the NVIDIA's architecture which is relatively small and showed an extremely high performance. At the start of my project, other architectures were experimented also, for example: the convolutional network with Inception modules of GoogLeNet Architecture was imported for feature extraction and 3 Dense layers were added on top, but was very slow and gave similar results to the NVIDIA architecture. Hence, the NVIDIA architecture was chosen and further enhanced, since it wasn't as complicated as GoogLeNet or VGG, and it was way easier to train and prevented overfitting using such a simple architecture; Resembled in the figure below.
 
-<p align="center"><img src="./writeup_images/NVIDIA_ConvNet.png"/></p>
+<p align="center">
+<img align="center" src="./writeup_images/NVIDIA_ConvNet.png" alt="alt text" width="400" height="600">
+</p>
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set with 4:1 ratio. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
