@@ -135,16 +135,21 @@ To combat overfitting, I proceeded with several techniques:
 
 <p align="center"><img src="./writeup_images/img_crop.png"/></p>
 
-2. Resizing to reduce the number of features input to the model and hence reducing the model complexity.
+2. Resizing each input to size: 66x200x3. Reducing the number of features input to the model and hence downsizing the model complexity. Through using Keras backend function `ktf.image.resize_nearest_neighbor`.
 
     * Cropped Image:
     <p align="right"><img src="./writeup_images/img_resize.png"></p>
 
-    * Resized Cropped Image:
+    * Resized Cropped Image: 
     <p align="right"><img src="./writeup_images/img_resized.png"></p>
 
 
-
+## **Training the Model**
+After augmenting and preprocessing the data, I modified the NVIDIA architecture slightly by adding an ELU 'Exponential Linear Units' instead of the common RELU.
+    * ELU introduces non-linearity to the model which solves the vanishing gradient problem
+    * ELU is better than RELU since it has a mean closer to zero than the RELU which accelerates the training.
+    * Introducing ELU to the model significantly enhanced its performance and helped the model to converge towards a lower minima.
+    
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
