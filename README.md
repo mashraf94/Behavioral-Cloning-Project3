@@ -7,3 +7,8 @@ To autonomously drive the car in Udacity's simulator using the proposed [model](
 2. Launch Simulator in Autonomous mode
 
 *Please check the [writeup report](writeup_report.md) for further details*
+
+*[model.py](model.py) includes the python code used for augmenting, processing and filtering the dataset. Plus, the model architecture and training. To train this model, change `DIR_NAMES` to your directories in model.py and run
+`python model.py`
+
+*For more indepth on my code, check the IPython Notebook [model.ipynb](model.ipynb)
