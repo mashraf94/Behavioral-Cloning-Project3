@@ -81,7 +81,7 @@ For details about how I created the training data, see the next section.
 
 My first step was to use a convolution neural network model similar to the NVIDIA's architecture which is relatively small and showed an extremely high performance. At the start of my project, other architectures were experimented also, for example: the convolutional network with Inception modules of GoogLeNet Architecture was imported for feature extraction and 3 Dense layers were added on top, but was very slow and gave similar results to the NVIDIA architecture. Hence, the NVIDIA architecture was chosen and further enhanced, since it wasn't as complicated as GoogLeNet or VGG, and it was way easier to train and prevented overfitting using such a simple architecture; Resembled in the figure below.
 
-->![alt_text][NVIDIA_arch]<-
+![alt_text][NVIDIA_arch]
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set with 4:1 ratio. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
@@ -93,16 +93,17 @@ Overfitting was one of the main issues throughout this project:
 
 2. Regularizing the data's probability density:
     1. Plotted the raw data's histogram:
-    
-    ->![alt_text][import_data]<-
+
+    <img align="right" src="./writeup_images/import_data_dist.png">
+    <p style="text-align: center"><img src="./writeup_images/import_data_dist.png" /></p>
     
     2. Reduced the amount of data overshooting the scaled average by a range of experimented factors (1 --> 3), and choosing a factor of 1.5 as an optimum; Scaled Average = 1560 image/bin
     
-    ->![alt_text][filter_data]<-
+    ![alt_text][filter_data]
     
     3. Included images captured by the left and right cameras and adjusted the steering angle by a correction factor of 0.2. Plus, I flipped the each of the three images and applied a negative sign to the steering angles.
     
-    ->![alt_text][final_data]<-
+    ![alt_text][final_data]
     
     * Although, the highest concentration of data was at the 0 steering angle, however, I think that the distribution resembled in this histogram, is a clean bell shape curve, representation of the steering angles propabilities with zero mean and standard deviation 0.4.
     * This normal distribution of data, had a significant impact on the model's performance; cleaned up the noise shown in the car driving unsteadily through the tracks.
@@ -113,7 +114,7 @@ Overfitting was one of the main issues throughout this project:
     3. Introducing a random brightness and dimming to each image to account for shadows and bright sections of each track.
     4. Blurring each image with 3x3 kernel to reduce the impact of any textures on the training.
     
-    ->![alt_text][blur_img]<-
+    ![alt_text][blur_img]
 
 4. Batch normalization for each layer, to reduce the covariate shift of the outputs of each layer.
 
@@ -123,12 +124,12 @@ Overfitting was one of the main issues throughout this project:
     * The Green Line represents the saved model due to the save_best_only=True parameter in Keras Checkpoint callback function.
     * The Early Stopping Callback function stopped the model at the 6th epoch since the Validation Loss stopped decreasing to avoid overfitting.
 
-->![alt_text][model_loss]<-
+![alt_text][model_loss]
 
 7. Preprocessing each input image to the model (including test images):
     1. Cropping to avoid learning any features other than the track itself.
     
-    ->![alt_text][img_crop]<-
+    ![alt_text][img_crop]
     
     2. Resizing to reduce the number of features input to the model and hence reducing the model complexity.
         
