@@ -116,7 +116,7 @@ Overfitting was one of the main issues throughout this project:
         <p align="center"><img src="./writeup_images/right_correct.png"></p>
     3. Introducing a random brightness and dimming to each image to account for shadows and bright sections of each track.
         * Image with random brightness of -30 which dimms the image as shown:
-        <p align="center"><img src="./writeup_images/img_dim.png"></p>
+        2<p align="center"><img src="./writeup_images/img_dim.png"></p>
     4. Blurring each image with 3x3 kernel to reduce the impact of any textures on the training.
         <p align="center"><img src="./writeup_images/img.png"/></p>
 
