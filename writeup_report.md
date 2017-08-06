@@ -219,6 +219,10 @@ Moreover, I recorded a recovery data set on Track 1, driving the vehichle from o
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 5 as evidenced by the Early Stopping method (mentioned earlier). 
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. 
+
+*I fed the model this huge amount of data using a python generator that read, augmented the images, shuffled the data, and created the labels of the dataset and generated them in batches for the `model.fit_generator` function.* (model.py lines 128-187)
+
+The ideal number of epochs was 5 as evidenced by the Early Stopping method (mentioned earlier). 
 
 I used an adam optimizer using the default learning rate of 0.001 which acquired the highest performance and furthest convergence.
