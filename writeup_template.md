@@ -75,7 +75,7 @@ Training data:
 
 For details about how I created the training data, see the next section. 
 
-### **Model Architecture and Training Strategy**
+## **Model Architecture and Training Strategy**
 
 #### 1. Solution Design Approach
 
@@ -85,14 +85,14 @@ My first step was to use a convolution neural network model similar to the NVIDI
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set with 4:1 ratio. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
-#### **Overfitting**
+## **Overfitting**
 Overfitting was one of the main issues throughout this project:
     To combat overfitting, I proceeded with several techniques:
     
-1. Reducing the density of the data from Track 1, through using data from the second track, to avoid overfitting on the first track and avoiding the model to only memorize driving around the first track.
+#### 1. Reducing the density of the data from Track 1, through using data from the second track, to avoid overfitting on the first track and avoiding the model to only memorize driving around the first track.
 
-2. Regularizing the data's probability density:
-    1. Plotted the raw data's histogram:
+#### 2. Regularizing the data's probability density:
+1. Plotted the raw data's histogram:
 
     <p align="center" height=100 width=100><img src="./writeup_images/import_data_dist.png"/></p>
     
@@ -107,8 +107,8 @@ Overfitting was one of the main issues throughout this project:
     * Although, the highest concentration of data was at the 0 steering angle, however, I think that the distribution resembled in this histogram, is a clean bell shape curve, representation of the steering angles propabilities with zero mean and standard deviation 0.4.
     * This normal distribution of data, had a significant impact on the model's performance; cleaned up the noise shown in the car driving unsteadily through the tracks.
     
-3. Augmenting the Data: 
-    1. Through flipping each image and applying a negative sign to its angle.
+#### 3. Augmenting the Data: 
+1. Through flipping each image and applying a negative sign to its angle.
         * Center Image with Steering Angle: 
         <p align="center"><img src="./writeup_images/normal_angle.png"/></p>
     2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
@@ -120,18 +120,18 @@ Overfitting was one of the main issues throughout this project:
     4. Blurring each image with 3x3 kernel to reduce the impact of any textures on the training.
         <p align="center"><img src="./writeup_images/img.png"/></p>
 
-4. Batch normalization for each layer, to reduce the covariate shift of the outputs of each layer.
+#### 4. Batch normalization for each layer, to reduce the covariate shift of the outputs of each layer.
 
-5. Introducing L2 Regularization to each layer's weights of 0.001
+#### 5. Introducing L2 Regularization to each layer's weights of 0.001
 
-6. Used Early Stopping for the training epochs, so that as soon as the Validation Loss stops decreasing the training is terminated.
-    * The Green Line represents the saved model due to the `save_best_only=True` parameter in Keras Checkpoint callback function.
-    * The Early Stopping Callback function stopped the model at the 6th epoch since the Validation Loss stopped decreasing to avoid overfitting.
+#### 6. Used Early Stopping for the training epochs, so that as soon as the Validation Loss stops decreasing the training is terminated.
+* The Green Line represents the saved model due to the `save_best_only=True` parameter in Keras Checkpoint callback function.
+* The Early Stopping Callback function stopped the model at the 6th epoch since the Validation Loss stopped decreasing to avoid overfitting.
 
 <p align="center"><img src="./writeup_images/model_loss.png"/></p>
 
-7. Preprocessing each input image to the model (including test images):
-    1. Cropping to avoid learning any features other than the track itself.
+### 7. Preprocessing each input image to the model (including test images):
+1. Cropping to avoid learning any features other than the track itself.
     
     <p align="center"><img src="./writeup_images/img_crop.png"/></p>
     
