@@ -85,9 +85,12 @@ My first step was to use a convolution neural network model similar to the NVIDI
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set with 4:1 ratio. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
+#####Overfitting
 Overfitting was one of the main issues throughout this project:
-    To combat the overfitting, I experimented with several techniques:
+    To combat overfitting, I proceeded with several techniques:
+    
 1. Reducing the density of the data from Track 1, through using data from the second track, to avoid overfitting on the first track and avoiding the model to only memorize driving around the first track.
+
 2. Regularizing the data's probability density:
     1. Plotted the raw data's histogram:
     
@@ -102,17 +105,32 @@ Overfitting was one of the main issues throughout this project:
     ![alt_text][final_data]
     
     * Although, the highest concentration of data was at the 0 steering angle, however, I think that the distribution resembled in this histogram, is a clean bell shape curve, representation of the steering angles propabilities with zero mean and standard deviation 0.4.
+    * This normal distribution of data, had a significant impact on the model's performance; cleaned up the noise shown in the car driving unsteadily through the tracks.
     
 3. Augmenting the Data: 
     1. Through flipping each image and applying a negative sign to its angle.
     2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
     3. Introducing a random brightness and dimming to each image to account for shadows and bright sections of each track.
-    4. Introducing L2 Regularization to each layer's weights
+    4. Blurring each image with 3x3 kernel to reduce the impact of any textures on the training.
+    
+    ![alt_text][blur_img]
+
 4. Batch normalization for each layer, to reduce the covariate shift of the outputs of each layer.
-5. Used Early Stopping for the training epochs, so that as soon as the Validation Loss stops decreasing the training is terminated.
-6. Preprocessing each input image to the model (including test images):
-1. Cropping to avoid learning any features other than the track itself
-2. Resizing to reduce the number of features input to the model and hence reducing the model complexity.
+
+5. Introducing L2 Regularization to each layer's weights of 0.001
+
+6. Used Early Stopping for the training epochs, so that as soon as the Validation Loss stops decreasing the training is terminated.
+    * The Green Line represents the saved model due to the save_best_only=True parameter in Keras Checkpoint callback function.
+    * The Early Stopping Callback function stopped the model at the 6th epoch since the Validation Loss stopped decreasing to avoid overfitting.
+
+![alt_text][model_loss]
+
+7. Preprocessing each input image to the model (including test images):
+    1. Cropping to avoid learning any features other than the track itself.
+    
+    ![alt_text][img_crop]
+    
+    2. Resizing to reduce the number of features input to the model and hence reducing the model complexity.
         
             
 
