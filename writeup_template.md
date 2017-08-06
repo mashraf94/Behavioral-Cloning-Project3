@@ -95,14 +95,17 @@ To combat overfitting, I proceeded with several techniques:
 
 #### 2. Regularizing the data's probability density:
 1. Plotted the raw data's histogram:
+    * After the collection process, the dataset included 23,926 images. However, after viewing the dataset distribution on a histogram (below) with 23 bins, each representing a range of angles. The steering angles around 0 had significanyly higher density.
 
 <p align="center" height=100 width=100><img src="./writeup_images/import_data_dist.png"/></p>
 
 2. Reduced the amount of data overshooting the scaled average by a range of experimented factors (1 --> 3), and choosing a factor of 1.5 as an optimum; Scaled Average = 1560 image/bin
+    * The data was filtered to make the model further generalize on hard angles up to -1 and 1, while maintaining the highest probability at 0, resembling the gaussian bell shape curve distribution. The filtered data had a total of 13,396 images.
 
 <p align="center"><img src="./writeup_images/filter_data_dist.png"/></p>
 
 3. Included images captured by the left and right cameras and adjusted the steering angle by a correction factor of 0.2. Plus, I flipped the each of the three images and applied a negative sign to the steering angles.
+    * This resulted in 6x the filtered images with a total of 80,376 images. 
 
 <p align="center"><img src="./writeup_images/normalized_data_dist.png"/></p>
 
@@ -112,9 +115,9 @@ To combat overfitting, I proceeded with several techniques:
 #### 3. Augmenting the Data: 
 1. Through flipping each image and applying a negative sign to its angle.
     * Center Image with Steering Angle: 
-    <p align="center"><img src="./writeup_images/normal_angle.png"/></p>
+        <p align="center"><img src="./writeup_images/normal_angle.png"/></p>
     * Flipped Center Image with Steering Angle: 
-    <p align="center"><img src="./writeup_images/reverse_angle.png"/></p>
+        <p align="center"><img src="./writeup_images/reverse_angle.png"/></p>
 2. Using the left and right cameras, and using a correction of 0.2 on the captured images' angles.
     * Image Representing Right Camera - Red Line is imported Steering Angle and Blue Line shows the correction 0.2:
     <p align="center"><img src="./writeup_images/right_correct.png"></p>
@@ -165,41 +168,75 @@ At the end of the process, the vehicle was able to drive autonomously cleanly ar
 ## **Final Model Architecture**
 
 The final model architecture (model.py lines 195-271) consisted of a convolution neural network with the following layers and layer sizes: 
-| # | Layer | Details |
-|:---:|:----------:|:---------:|
+
+| Sections | Layer | Details | 
+| :---: | :----------: | :---------------------------------------: |
 | 1 | Cropping | Crops image to 76x320 |
 | 2 | Resize | Resizes image to 66x200 |
 | 3 | Normalization | Normalized pixel values from -1 to 1 |
 | 4 | Convolutional 1 | 5x5 Filter, Same Padding, Stride 1 |
+| | | Conv Output: 66x200x24 |
+| | Batch Normalization | |
+| | Activation | ELU |
+| | 2x2 Max Pooling | Pool Output: 33x100x24 |
+| 5 | Convolutional 2 | 5x5 Filter, Same Padding, Stride 1 |
+| | | Conv Output: 33x100x36 |
+| | Batch Normalization | |
+| | Activation | ELU |
+| | 2x2 Max Pooling | Pool Output: 16x50x36 | 
+| 6 | Convolutional 3 | 5x5 Filter, Same Padding, Stride 1 |
+| | | Conv Output: 16x50x48 |
+| | Batch Normalization | |
+| | Activation | ELU |
+| | 2x2 Max Pooling | Pool Output: 8x25x48 |
+| 7 | Convolutional 4 | 3x3 Filter, Same Padding, Stride 1 |
+| | | Conv Output: 8x25x64 |
+| | Batch Normalization | |
+| | Activation | ELU |
+| | | 2x2 Max Pooling | Pool Output: 4x12x64 | 
+| 8 | Convolutional 5 | 3x3 Filter, Same Padding, Stride 1 |
+| | | Conv Output: 4x12x64 |
+| | Batch Normalization | |
+| | Activation | ELU |
+| | | 2x2 Max Pooling | Pool Output: 2x6x64 | 
+| 9 | Flatten | Output: 768 |
+| 10 | Fully Connected 1 | Output: 100 |
+| | Batch Normalization | |
+| | Activation | ELU |
+| 11 | Fully Connected 2 | Output: 50 |
+| | Batch Normalization | |
+| | Activation | ELU |
+| 12 | Fully Connected 3 | Output: 10 |
+| | Batch Normalization | |
+| | Activation | ELU |
+| 13 | Output | Output: 1 Predicted Steering Angle |
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+Here is a visualization of the architecture sequence:
 
 <p align="center"><img src="./writeup_images/model_final.png"></p>
 
-####3. Creation of the Training Set & Training Process
+#### Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture good driving behavior, I first recorded two laps on tracks 1 and 2 using center lane driving with a joystick for smoother angle transitions, images from both tracks are shown below:
+* Track 1: 
+<p align="center"><img src="./writeup_images/center_track1.jpg"></p>
+* Track 2:
+<p align="center"><img src="./writeup_images/center_track2.jpg"></p>
 
-![alt text][image2]
+Moreover, I recorded a recovery data set on Track 1, driving the vehichle from off the road and back in, and emphasis on high curved regions along with rarely occuring regions of the track:
+* The following images show an example for recovering back to the road in order:
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+<p align="center">
+<img src="./writeup_images/recovery1.jpg">   <img src="./writeup_images/recovery2.jpg"> 
+<img src="./writeup_images/recovery3.jpg">   <img src="./writeup_images/recovery4.jpg"> 
+</p>
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+* The image below represents one of the less dense images in the data set; i.e: the bridge:
 
-Then I repeated this process on track two in order to get more data points.
+<p align="center"><img src="./writeup_images/recovery6.jpg"></p>
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-![alt text][image6]
-![alt text][image7]
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 5 as evidenced by the Early Stopping method (mentioned earlier). 
 
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used an adam optimizer using the default learning rate of 0.001 which acquired the highest performance and furthest convergence.
