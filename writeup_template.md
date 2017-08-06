@@ -48,7 +48,7 @@ The model.py file contains the code for training and saving the convolution neur
 
 My model is a modified replica of the NVIDIA architecture for end-to-end autonomous driving with 5 Convolutional Layers at first, followed by 3 Fully Connected Layers that produces the output layer as the steering angle prediction. (model.py lines 195-271)
 
-The model includes ELU layers to introduce nonlinearity, and the model's inputs are pre-processed by a Cropping2D layer to crop the images, followed by 2 Keras lambda layers for normalization and resizing. (code line 199-205). 
+The model includes ELU layers to introduce nonlinearity, and the model's inputs are pre-processed by a Cropping2D layer to crop the images, followed by 2 Keras lambda layers for normalization and resizing. (model.py 199-205). 
 
 #### 2. Attempts to reduce overfitting in the model
 
@@ -146,9 +146,9 @@ To combat overfitting, I proceeded with several techniques:
 
 ## **Training the Model**
 After augmenting and preprocessing the data, I modified the NVIDIA architecture slightly by adding an ELU 'Exponential Linear Units' instead of the common RELU.
-    * ELU introduces non-linearity to the model which solves the vanishing gradient problem
-    * ELU is better than RELU since it has a mean closer to zero than the RELU which accelerates the training.
-    * Introducing ELU to the model significantly enhanced its performance and helped the model to converge towards a lower minima.
+* ELU introduces non-linearity to the model which solves the vanishing gradient problem
+* ELU is better than RELU since it has a mean closer to zero than the RELU which accelerates the training.
+* Introducing ELU to the model significantly enhanced its performance and helped the model to converge towards a lower minima.
     
 The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
 
@@ -156,11 +156,11 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 195-271) consisted of a convolution neural network with the following layers and layer sizes ...
 
 Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
 
-![alt text][image1]
+<p align="center"><img src="./writeup_images/model_final.png"></p>
 
 ####3. Creation of the Training Set & Training Process
 
