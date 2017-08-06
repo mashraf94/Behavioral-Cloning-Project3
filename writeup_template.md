@@ -132,7 +132,7 @@ To combat overfitting, I proceeded with several techniques:
 #### 5. Introducing L2 Regularization to each layer's weights of 0.001
 
 #### 6. Used Early Stopping for the training epochs, so that as soon as the Validation Loss stops decreasing the training is terminated.
-* The Green Line represents the saved model due to the `save_best_only=True` parameter in Keras Checkpoint callback function.
+* The Green Line represents the saved model due to the `save_best_only=True` parameter in Keras `ModelCheckpoint` callback function.
 * The Early Stopping Callback function stopped the model at the 6th epoch since the Validation Loss stopped decreasing to avoid overfitting.
 
 <p align="center"><img src="./writeup_images/model_loss.png"/></p>
