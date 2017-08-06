@@ -10,27 +10,9 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
-[//]: # (Image References)
-
-[NVIDIA_arch]: ./writeup_images/NVIDIA_ConvNet.png "NVIDIA Model Visualization"
-[model_graph]: ./writeup_images/model_final.png "Model Architecture"
-[model_loss]: ./writeup_images/model_loss.png "Model Losses"
-[blur_img]: ./writeup_images/img.png "Blurred Image"
-[import_data]: ./writeup_images/import_data_dist.png "Imported Data Histogram"
-[filter_data]: ./writeup_images/filter_data_dist.png "Filtered Data Histogram"
-[final_data]: ./writeup_images/normalized_data_dist.png "Augmented Filtered Data Histogram"
-[center_track1]: ./writeup_images/center_track1.jpg "Center Track 1"
-[center_track2]: ./writeup_images/center_track2.jpg "Center Track 2"
-[recovery1]: ./writeup_images/recovery1.jpg "Recovery 1"
-[recovery2]: ./writeup_images/recovery2.jpg "Recovery 2"
-[recovery3]: ./writeup_images/recovery3.jpg "Recovery 3"
-[recovery4]: ./writeup_images/recovery4.jpg "Recovery 4"
-[recovery5]: ./writeup_images/recovery5.jpg "Recovery 5"
-[recovery6]: ./writeup_images/recovery6.jpg "Recovery 6"
-[img_crop]: ./writeup_images/img_crop.png "Cropped"
-
 My project includes the following files:
 * model.py containing the script to create and train the model
+* model.ipynb containing the ipython notebook similar to model.py with model training and visualizations of the dataset.
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network
 * Track1.mp4 recorded video of the car autonomously driving succesfully through Track 1
